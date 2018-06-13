@@ -1,10 +1,10 @@
 # Dione-tinymce
-基于tinymce网络图片上传增加了本地图片上传功能
+基于tinymce网络图片上传增加了本地图片上传和本地视频上传功能
 
 
-这个功能的具体实现写在component组件里面
+这两个功能的具体实现写在component组件里面
 有两种实现方法  
-    1: 选择文件后直上传然后得到网络url
+    1: 选择图片文件或者视频文件后直上传然后得到网络url
     2: 用HTML5的 File API 的 FileReader 图片本地转成base64格式的url,然后将url赋值给一个img标签
 两种方法的实现均在代码里面有实现
 

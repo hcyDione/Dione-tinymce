@@ -22,12 +22,29 @@
                 <div class="body">
                     <div class="chooseImg">
                         <button class="imgbtn">选择图片</button>
-                        <input type="file" class="inputfile" @change="handleFileChange" ref="inputer"/>
+                        <input type="file" class="inputfile" accept="image/*" @change="handleFileChange" ref="inputer"/>
                     </div> 
                 </div>
                 <div class="footer">
                     <button class="confirm"  v-on:click="confirm">确定</button>
                     <button class="cancel"  v-on:click="cancel">取消</button>
+                </div>
+            </div>
+        </div>
+        <div class="mask" v-if="uploadvideo == true">
+            <div class="imgupload">
+                <div class="header">
+                   <span>上传本地视频</span>
+                </div>
+                <div class="body">
+                    <div class="chooseImg">
+                        <button class="imgbtn">选择视频</button>
+                        <input type="file" class="inputfile" accept="video/*" @change="handleVideoChange" ref="videoer"/>
+                    </div> 
+                </div>
+                <div class="footer">
+                    <button class="confirm"  v-on:click="confirmvideo">确定</button>
+                    <button class="cancel"  v-on:click="cancelvideo">取消</button>
                 </div>
             </div>
         </div>
@@ -61,23 +78,32 @@ export default {
             id: 'editor',
             content: '',
             uploadimg: false,
+            uploadvideo: false,
             tinymceEditor:null,
             filedata: '',
-            token:'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MjkzMTI2MjgsInVzZXJuYW1lIjoiMTgwMDIyNDI1NjU3MjI4MjAyNCJ9.4YlMUjhdQywpYBpJC1mIcwFWgW4lOnZr3Udbka5rNa8'
+            token:'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MzExMjcwNTYsInVzZXJuYW1lIjoiMTgwMDIyNDI1NjU3MjI4MjAyNCJ9.3od2wH72tRR3cjPSXaj7YRzo8iSxRzSE7zuVb5PIrTc' //获取自己服务端的token值
         }
     },
     methods:{
-        confirm() {
+        confirm () {
             var img = "<p><img src='https://images.yitushijie.com/error.png'/></p>";
             this.tinymceEditor.insertContent(img);
             this.uploadimg = false
         },
-        cancel(){
+        cancel (){
             this.uploadimg = false
+        },
+        confirmvideo () {
+            var video = "<p><video src='https://images.yitushijie.com/4344072085498187963' controls></video></p>";
+            this.tinymceEditor.insertContent(video);
+            this.uploadvideo = false
+        },
+        cancelvideo (){
+            this.uploadvideo = false
         },
         handleFileChange(e){
              let self = this
-             let inputDom = this.$refs.inputer
+             let inputDom = this.$refs.inputer //拿到的是个Dom元素
              var file = inputDom.files[0]
              //将图片转成base64格式,以base64编码的格式展示出来
              /*
@@ -94,6 +120,7 @@ export default {
              //转换成网络图片来展示出来
              var param = new FormData();
              param.append('Filedata',file)
+             // 调用自己的服务端接口
              self.$http.post('https://api.lotusdata.com/ip/v1/file/standardupload', param, {
                 headers: 
                     { 
@@ -106,6 +133,28 @@ export default {
                         var img = "<p><img src='"+imgUrl+"'/></p>";
                         self.tinymceEditor.insertContent(img);
                         self.uploadimg = false
+                    }
+                });
+        },
+        handleVideoChange (e) {
+            let self = this
+            let inputDom = this.$refs.videoer //拿到的是个Dom元素
+            var file = inputDom.files[0];
+            var param = new FormData();
+            param.append('Filedata',file)
+            // 调用自己的服务端接口
+            self.$http.post('https://api.lotusdata.com/v1/file/videoupload', param, {
+                headers: 
+                    { 
+                        'Authorization': self.token,
+                        'Content-Type':'multipart/form-data' 
+                    } 
+                }).then( function (res){
+                    if (res.data.code == "0"){
+                        var videoUrl = res.data.data
+                        var video = "<p><video src='"+videoUrl+"' controls></video></p>";
+                        self.tinymceEditor.insertContent(video);
+                        self.uploadvideo = false
                     }
                 });
         }
@@ -123,15 +172,25 @@ export default {
                 },  
                 plugins: 'link lists image code table colorpicker textcolor wordcount contextmenu', 
                 toolbar:
-                'bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | undo redo | code mybutton',
+                'bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | undo redo | code uploadpic uploadvideo',
                 setup: function (editor) {
                     self.tinymceEditor = editor
-                    editor.addButton('mybutton', {
+                    /*基于tinymce 自己添加的上传图片按钮,切记要在toolbar初始化时*/
+                    editor.addButton('uploadpic', {
                         title: '上传图片',
-                        image: 'https://images.yitushijie.com/sendpic.png',
+                        image: 'https://images.yitushijie.com/10528614111920410800',
                         onclick: function () {
                             console.log('add image')
                             self.uploadimg = true
+                        }
+                    })
+                    /*基于tinymce 自己添加的上传视频按钮*/
+                    editor.addButton('uploadvideo', {
+                        title: '上传视频',
+                        image: 'https://images.yitushijie.com/4494133835768289360',
+                        onclick: function () {
+                            console.log('add video')
+                            self.uploadvideo = true
                         }
                     })
                 }
