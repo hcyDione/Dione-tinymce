@@ -1,0 +1,128 @@
+/* css reset www.admin10000.com */
+body, html {
+	background-color:#f4f4f4;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td, span {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font-family: 'Avenir', Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased; /*页面字体抗锯齿,使用后字体看起来更清晰,*/
+	-moz-osx-font-smoothing: grayscale;
+}
+td, th, caption {
+	font-size: 14px;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+	font-size: 100%;
+}
+address, caption, cite, code, dfn, em, strong, th, var {
+	font-style: normal;
+	font-weight: normal;
+}
+a {
+	color: #555;
+	text-decoration: none;
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0.5);
+	-webkit-user-select: rgba(255, 255, 255, 0.5);
+	-moz-user-focus: rgba(255, 255, 255, 0.5);
+	-moz-user-select: rgba(255, 255, 255, 0.5);
+}
+a:hover {
+	text-decoration: none;
+}
+
+img {
+	border: none;
+}
+ol, ul, li {
+	list-style: none;
+}
+input, textarea, button, div {
+	/*font: 14px Verdana, Helvetica, Arial, sans-serif;*/
+	border:none;
+	outline:none;
+}
+textarea {
+	resize:none /*去掉textarea右下角的resize图标*/
+}
+select, option{
+	appearance:none;
+}
+/*ie 清除*/
+
+select::-ms-expand{ display: none; }
+option::-ms-expand{ display: none; }
+
+table {
+	border-collapse: collapse;
+}
+video, audio{
+	display: inline-block;
+}
+html {
+	overflow-y: scroll;
+}
+/* css common */
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.clearfix {
+	*zoom: 1;
+}
+.left{
+	float:left;
+}
+.right{
+	float:right;
+} 
+input::-webkit-input-placeholder{
+	color:#9B9B9B;
+	font-size:14px;
+}
+textarea::-webkit-input-placeholder{
+	color:#9B9B9B;
+	font-size:14px;
+}
+.row {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+}
+.col {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	flex: 1;
+}
+.oneline{
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+	-webkit-box-orient: vertical;
+}
+.sixline{
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-line-clamp: 6;
+	-webkit-box-orient: vertical;
+}
+.scrollBar {
+    position: absolute;
+    top: 0;
+    right: 4px;
+    width: 10px;
+    background-color: rgba(0, 0, 0, .3);
+    height: 100px;
+    border: 1px solid rgba(255, 255, 255, .3);
+    box-sizing: border-box;
+    z-index: 909;
+    border-radius: 50px;
+}
+

@@ -103,6 +103,7 @@ export default {
         },
         handleFileChange(e){
              let self = this
+             self.uploadimg = false
              let inputDom = this.$refs.inputer //拿到的是个Dom元素
              var file = inputDom.files[0]
              //将图片转成base64格式,以base64编码的格式展示出来
@@ -132,12 +133,12 @@ export default {
                         var imgUrl = res.data.data
                         var img = "<p><img src='"+imgUrl+"'/></p>";
                         self.tinymceEditor.insertContent(img);
-                        self.uploadimg = false
                     }
                 });
         },
         handleVideoChange (e) {
             let self = this
+            self.uploadvideo = false
             let inputDom = this.$refs.videoer //拿到的是个Dom元素
             var file = inputDom.files[0];
             var param = new FormData();
@@ -178,7 +179,7 @@ export default {
                     /*基于tinymce 自己添加的上传图片按钮,切记要在toolbar初始化时*/
                     editor.addButton('uploadpic', {
                         title: '上传图片',
-                        image: 'https://images.yitushijie.com/10528614111920410800',
+                        image: 'https://images.yitushijie.com/4924417530274796492',
                         onclick: function () {
                             console.log('add image')
                             self.uploadimg = true
@@ -187,7 +188,7 @@ export default {
                     /*基于tinymce 自己添加的上传视频按钮*/
                     editor.addButton('uploadvideo', {
                         title: '上传视频',
-                        image: 'https://images.yitushijie.com/4494133835768289360',
+                        image: 'https://images.yitushijie.com/9368323186097541344',
                         onclick: function () {
                             console.log('add video')
                             self.uploadvideo = true

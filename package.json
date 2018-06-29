@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@tinymce/tinymce-vue": "^1.0.7",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
     "tinymce": "^4.7.12",
     "vue": "^2.5.2",
     "vue-resource": "^1.5.1",

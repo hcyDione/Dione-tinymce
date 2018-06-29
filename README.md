@@ -1,8 +1,9 @@
 # Dione-tinymce
 基于tinymce网络图片上传增加了本地图片上传和本地视频上传功能
+自建编辑器 手机pc于一体的文章生成编辑器,编辑器实现纯原生
 
 
-这两个功能的具体实现写在component组件里面
+这两个功能的具体实现写在component文件夹里面
 有两种实现方法  
     1: 选择图片文件或者视频文件后直上传然后得到网络url
     2: 用HTML5的 File API 的 FileReader 图片本地转成base64格式的url,然后将url赋值给一个img标签
