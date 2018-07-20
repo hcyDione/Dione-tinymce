@@ -967,7 +967,7 @@
                 </div>
             </div>
             <div class="editor-right right">
-                <div class="web-page" v-if="!switchview">
+                <div class="web-page" v-show="!switchview">
                     <div class="cy-circle">
                         <div class="cover">
                             <div class="article-meta">
@@ -1035,7 +1035,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="foot-tools" v-if="!switchview">
+                <div class="foot-tools" v-show="!switchview">
                     <div class="cy-tools">
                         <button class="del"><i class="iconfont icon-lajixiang"></i></button> 
                         <button class="look"><i class="iconfont icon-yulan"></i></button>   
@@ -1045,7 +1045,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="work-img" class="win-edite" v-if="switchview">
+                <div id="work-img" class="win-edite" v-show="switchview">
                     <div class="cy-header clearfix">
                         <span class="beader-btn left" v-if="isshowpic">更换图片</span>
                         <span class="beader-btn left" v-if="isshowtext">添加图片</span>
@@ -1160,7 +1160,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="textarea" maxlength="5000" contenteditable="true"  @input="getHtml">
+                        <div class="textarea" maxlength="5000" contenteditable="true" ref="currentDetail" v-html="currentDetail"  @input="getHtml">
                             
                         </div>
                     </div>
@@ -1183,15 +1183,18 @@
                 </div>
             </div>
         </div>
+        <Loading v-if="isLoading"></Loading>
 	</div>   
 </template>
 
 <script>
 
+import Loading from './loading.vue'
+
 export default {
     name: 'myeditor',
     components:{
-       
+       Loading
     },
     data () {
         return {
@@ -1208,6 +1211,7 @@ export default {
             ispre: true, //是预览状态还是新建状态
             currentsrc: 'https://images.yitushijie.com/1374616231318671478', //展示当前编辑的图片或者视频地址
             currentindex: 0,
+            currentDetail: '',
             styleObject: {
                 backgroundImage: 'url(http://static2.ivwen.com/user/38952333/c809ed4269f0000135c41ace1f001166.jpg-cover2)'
             },
@@ -1280,7 +1284,8 @@ export default {
                         text: '',
                     }
                 ]
-            }
+            },
+            isLoading:false
         }
     },
     methods:{
@@ -1362,6 +1367,10 @@ export default {
         opentext ( type, index) {
             this.switchview = true
             this.currentindex = index
+            //清空的时候不能用this.currentDetail = ''
+            this.$refs.currentDetail.innerHTML = ''
+            //清空之后在给内部的html赋值
+            this.currentDetail = this.videotexs[index].text
             if (type == 'text') {
                 this.isshowtext = true
                 this.isshowpic = false
