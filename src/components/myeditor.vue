@@ -1455,6 +1455,22 @@ export default {
         setLink () {
             this.mask.isshow = true
         },
+        setIndent () {
+            document.execCommand('formatblock', false, 'p')
+            var listId = window.getSelection().focusNode.parentNode;
+            if (listId.tagName != 'P') {
+                listId = listId.parentNode
+            }
+            listId.style.textIndent = '2em'
+            let index = this.currentindex
+            this.videotexs[index].text = this.$refs.currentDetail.innerHTML
+        },  
+        setDeIndent () {
+            var listId = window.getSelection().focusNode.parentNode;
+            if (listId.tagName == 'P') {
+                listId.style.textIndent = '0'
+            }
+        },
         conformmask () {
             this.links[0].href = this.mask.href
             this.links[0].desc = this.mask.desc
